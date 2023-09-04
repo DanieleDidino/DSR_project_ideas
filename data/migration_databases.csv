@@ -1,0 +1,73 @@
+title,code
+"Assumptions for net migration by age, sex, type of projection and metropolitan regions",MET_PROJ_19RANMIG
+"Emigration by age group, sex and citizenship",MIGR_EMI1CTZ
+Emigration by age and sex,MIGR_EMI2
+"Emigration by age group, sex and country of next usual residence",MIGR_EMI3NXT
+"Emigration by age group, sex and country of birth",MIGR_EMI4CTB
+Emigration by group of country of next usual residence,MIGR_EMI5NXT
+"Emigration by age group, sex, group of citizenship and group of country of next residence - ad hoc data collection (2015-2020)",MIGR_EMICTZNXT
+"Immigration by age group, sex and level of human development of the country of birth",MIGR_IMM10CTB
+"Immigration by age group, sex and level of human development of the country of previous residence",MIGR_IMM11PRV
+Immigration by broad group of country of previous residence,MIGR_IMM12PRV
+"Immigration by age group, sex and citizenship",MIGR_IMM1CTZ
+"Immigration by age, sex and group of citizenship",MIGR_IMM2CTZ
+"Immigration by age group, sex and country of birth",MIGR_IMM3CTB
+"Immigration by age, sex and group of country of birth",MIGR_IMM4CTB
+"Immigration by age group, sex and country of previous residence",MIGR_IMM5PRV
+"Immigration by sex, citizenship and group of country of birth",MIGR_IMM6CTZ
+"Immigration by sex, country of birth and group of citizenship",MIGR_IMM7CTB
+Immigration by age and sex,MIGR_IMM8
+"Immigration by age group, sex and level of human development of the country of citizenship",MIGR_IMM9CTZ
+"Immigration by age group, sex, group of citizenship and group of country of previous residence - ad hoc data collection (2015-2020)",MIGR_IMMCTZPRV
+Change of immigration status permits by reason and citizenship,MIGR_RESCHANGE
+"Change of immigration status permits by age, sex and citizenship",MIGR_RESCHST
+"Change of immigration status permits by age, sex and citizenship",MIGR_RESCHST$DV_1285
+"Assumptions for net migration by age, sex and type of projection",PROJ_19NANMIG
+"Assumptions for net migration by age, sex, type of projection and NUTS 3 region",PROJ_19RANMIG3
+"Assumptions for net migration by age, sex and type of projection",PROJ_23NANMIG
+"First generation of immigrants by sex, citizenship, duration and reason for migration",LFSO_14B1DR
+"Educational attainment level (ISCED11) distribution by sex, age, migration status and educational attainment level of parents (ISCED11F)",LFSO_14BEDUC
+Skills in host country language by migration status and citizenship,LFSO_14BLANG
+"Households by migration status, country of birth of parents and household composition",LFSO_14HHCOMPCOB
+"Households by migration status, working status and years of residence",LFSO_14HHWKMG
+"Employment rate of first generation of immigrants by sex, age, years of residence and reason for migration",LFSO_14L1EMPR
+"Activity rate by sex, age, migration status, citizenship and educational attainment level",LFSO_14LACTR
+"Methods to find current job by migration status, educational attainment level and type of contract",LFSO_14LEECM
+"Employees by migration status, educational attainment level, occupation and working time",LFSO_14LEEOW
+"Labour status distribution of the population by sex, age, migration status and educational attainment level",LFSO_14LEL
+"Employment by migration status, professional status, type of contract and full/part time",LFSO_14LEMP
+"Employment rate by sex, age, migration status, citizenship and educational attainment level",LFSO_14LEMPR
+"Self-declared over-qualified employees as percentage of the total employees by sex, age, migration status and educational attainment level",LFSO_14LOQ
+"Self-declared over-qualified employees as percentage of the total employees by sex, age, migration status and educational attainment level",LFSO_14LOQ$DV_615
+"Unemployment rate by sex, age, migration status, citizenship and educational attainment level",LFSO_14LUNER
+"Obstacles to getting a suitable job by migration status, labour status and citizenship (%)",LFSO_14OCITI
+"Obstacles to getting a suitable job by migration status, labour status and educational attainment level (%)",LFSO_14OEDUC
+"Population by sex, age, migration status and citizenship",LFSO_14PCITI
+"Ranking of citizenship by sex, age and migration status",LFSO_14PCITIRK
+"Population by sex, age, migration status and country of birth",LFSO_14PCOB
+"Population by sex, age, migration status, country of birth and country of birth of parents",LFSO_14PCOBP
+"Population by sex, age, migration status and degree of urbanisation",LFSO_14PURB
+"Employment by reason for discrimination in the current job, sex, age, migration status and professional status",LFSO_21DISC02
+"Population by educational attainment level of the parents, sex, age, migration status and educational attainment level",LFSO_21EDUC08
+"Employment by job satisfaction, sex, age, migration status and professional status",LFSO_21JSAT05
+"Employment rates by sex, age, migration status, citizenship and educational attainment level (%)",LFSQ_ERGANEDM
+"Population by sex, age, migration status, citizenship and educational attainment level (1 000)",LFSQ_PGANEDM
+"Number of households by migration status, working status and household composition",LFST_HHMGSCOMP
+"Population by sex, age, migration status and degree of urbanisation",LFST_R_PGAUM
+"Activity rates by sex, age, migration status, citizenship and educational attainment level",LFSA_ARGANEDM
+"Employees by sex, age, migration status and type of employment contract",LFSA_EEGATM
+"Employment by sex, age, migration status, professional status and full/part time",LFSA_EGAFTSM
+"Employment by sex, age, migration status, occupation and educational attainment level",LFSA_EGAISEDM
+"Employment rates by sex, age, migration status, citizenship and educational attainment level",LFSA_ERGANEDM
+"Population by sex, age, migration status, country of birth and country of birth of parents",LFSA_PGACCPM
+"Population by sex, age, migration status, citizenship and educational attainment level",LFSA_PGANEDM
+"Unemployment rates by sex, age, migration status, citizenship and educational attainment level",LFSA_URGANEDM
+"Percentage distribution of main reason for migration, by country of birth, sex and age (% of total migrants)",LFSO_08COBR
+"Percentage distribution of main reason for migration, years of residence, sex and age (% of total migrants)",LFSO_08RESR
+"Population change - crude rates of total change, natural change and net migration plus adjustment",TPS00019
+Immigration,TPS00176
+Emigration,TPS00177
+"Assumptions for net migration by age, sex, type of projection and other typologies",URT_PROJ_19RANMIG
+"Population change by NUTS 2 region - Crude rates of total change, natural change and net migration plus adjustment",TGS00099
+Health workforce migration - historical data (2000-2021),HLTH_RS_WKMG
+Health workforce migration,HLTH_RS_WKMG2
