@@ -1,5 +1,13 @@
 .gitignore
 venv_proj_ideas/
-venv_DSR_project_ideas
+venv_DSR_project_ideas/
 .git/
 .env
+model/
+exp_finetune/
+results
+afa_docs/
+all_pdfs/
+
+
+

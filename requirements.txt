@@ -9,6 +9,7 @@ nltk==3.8.1
 numpy==1.25.1
 openai==0.28.0
 pandas==2.0.3
+pdfkit==1.0.0
 plotly==5.16.1
 pypdf==3.15.5
 python-environ==0.4.54
