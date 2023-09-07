@@ -1,13 +1,12 @@
 import os
 import environ
-# import random
 import time
 import pickle
 import streamlit as st
 # from datetime import datetime
 from streamlit_chat import message
 from llama_index import SimpleDirectoryReader, VectorStoreIndex
-# from llama_index import StorageContext, load_index_from_disk
+from llama_index import StorageContext, load_index_from_storage
 import openai
 
 
@@ -125,7 +124,7 @@ def display_messages(messages):
 
 
 def load_docs_list():
-    docs_list_path = "docs/docs_list.pkl"
+    docs_list_path = "docs_list/docs_list.pkl"
     # file = open(docs_list_path,"rb")
     # docs_list = pickle.load(file)
     # file.close()
@@ -134,28 +133,13 @@ def load_docs_list():
     return docs_list
 
 
-##############################################################################
-
-# TODO: load an existing vector database
-load_vec_db = False
-if load_vec_db:
-    folder_with_index = "tmp_vec_db"
-    if not os.path.exists(folder_vec_db + "/" + folder_with_index):
-        os.mkdir(folder_vec_db + "/" + folder_with_index)
-    else:
-        storage_context = StorageContext.from_defaults(persist_dir=folder_vec_db)
-        loaded_index = load_index_from_disk(StorageContext.from_defaults(persist_dir=folder_vec_db))
-
-
 if __name__ == '__main__':
+    
     # Parameters
-    folder_docs = "docs" # Folder where to save the uploaded files
-    folder_vec_db= "vector_db" # Folder where to save the vector database
     num_to_return = 3 # number of results to return (from the similarity search)
-
-    # Uncomment this lines when we will ask for the user OpenAI Key
-    # openai_key = col.text_input('OpenAI Key:')
-    # os.environ["OPENAI_API_KEY"] = openai_key
+    folder_vec_db= "vector_database_1.json" # Folder where to save the vector database
+    folder_docs_user = "docs_user" # Folder where to save the uploaded files from the user
+    folder_vec_db_user = "vector_db_user" # Folder where to save the vector database from the user
 
     # For now I use my key
     env = environ.Env()
@@ -163,10 +147,24 @@ if __name__ == '__main__':
     API_KEY = env('OPENAI_API_KEY')
     openai.api_key = API_KEY
 
-    uploaded_files = st.file_uploader("Upload your files", type=['docx', 'doc', 'pdf'], accept_multiple_files=True)
-    documents = save_read_write_all_uploaded_files(uploaded_files, folder_docs=folder_docs)
-    index = create_vector_database(documents, folder_vec_db=folder_vec_db, file_name_vector_db="vect_bd_1.json")
+    # Uncomment this lines when we will ask for the user OpenAI Key
+    # openai_key = col.text_input('OpenAI Key:')
+    # os.environ["OPENAI_API_KEY"] = openai_key   
+
+    folder_with_index = "vector_db"
+    # rebuild storage context
+    storage_context = StorageContext.from_defaults(persist_dir="vector_db")
+    # load index
+    index = load_index_from_storage(storage_context)
     query_engine = index.as_query_engine(similarity_top_k=num_to_return)
+    
+    uploaded_files = st.file_uploader("Upload your files", type=['docx', 'doc', 'pdf'], accept_multiple_files=True)
+    if uploaded_files:
+        if not os.path.exists(folder_vec_db_user):
+            os.mkdir(folder_vec_db_user)
+        documents_user = save_read_write_all_uploaded_files(uploaded_files, folder_docs=folder_docs_user)
+        index_user = create_vector_database(documents_user, folder_vec_db=folder_vec_db_user, file_name_vector_db="vect_bd_user.json")
+        query_engine_user = index_user.as_query_engine(similarity_top_k=num_to_return)
 
     # Create title
     st.markdown("<h1 style='text-align: center; color: blue;'>German Admin Bot</h1>", unsafe_allow_html=True)
@@ -187,31 +185,6 @@ if __name__ == '__main__':
     if send_button:
         send_message(user_query, st.session_state.messages, query_engine)
         display_messages(st.session_state.messages)
-
-################################################################################
-
-# Create a function to get bot response
-# def get_bot_response(user_query):
-#     response = index.query(user_query)
-#     return str(response)
-    
-# Create a function to display messages
-# def display_messages(messages):
-#     for msg in messages:
-#         if msg['user'] == 'user':
-#             message(f"You ({msg['time']}): {msg['text']}", is_user=True, key=int(time.time_ns()))
-#         else:
-#             message(f"Bot ({msg['time']}): {msg['text']}", key=int(time.time_ns()))
-    
-    
-# Create a function to send messages
-# def send_message(user_query, messages):
-#     if user_query:
-#         messages.append({'user': 'user', 'text': user_query})
-#         bot_response = get_bot_response(user_query)
-#         messages.append({'user': 'bot', 'text': bot_response})
-#         st.session_state.messages = messages
-
 
 ####################################################################################################
 
