@@ -1,7 +1,7 @@
 # from datetime import datetime
 import time
 
-import bot_function as functions
+import DSR_project_ideas.bot_functions as functions
 import streamlit as st
 from streamlit_chat import message
 
