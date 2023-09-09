@@ -1,0 +1,32 @@
+span.css-10trblm.e1nzilvr1{
+    font-family: Georgia, serif; 
+    font-size: 28px; /* Replace with your desired font size */
+    color: #3b0b47; /* Replace with your desired text color */
+
+}
+
+
+div.css-183lzff.exotz4b0{
+    font-family: Merriweather, serif;
+    font-size: 18px; /* Replace with your desired font size */
+    color: #3b0b47; /* Replace with your desired text color */
+}
+
+
+div.css-z5fcl4 {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+
+style.custom-header {
+    position: absolute;
+    top: 10px; /* Adjust the value to control the distance from the top */
+    left: 10px; /* Adjust the value to control the distance from the left */
+}
+
+
+/*
+    fontFamily: {
+    sans: ['Graphik', 'sans-serif'],
+    serif: ['Merriweather', 'serif'],}
