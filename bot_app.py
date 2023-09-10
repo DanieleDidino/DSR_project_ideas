@@ -60,8 +60,8 @@ with open(".streamlit/custom.css") as f:
 
 # column 1
 with st.sidebar:
-    st.title("Büro Gott")
-    st.subheader("Your paper pusher bot")
+    st.title("Doc Hog")
+    st.subheader("He eats all your papers")
 
     with st.expander("Choose a file from your hard drive"):
         uploaded_file = st.file_uploader(
