@@ -29,9 +29,9 @@ st.set_page_config(
 # Hide the menu button
 st.markdown(
     """ <style>
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-</style> """,
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    </style> """,
     unsafe_allow_html=True,
 )
 
@@ -102,9 +102,8 @@ with st.sidebar:
 
     # show a selection of stored files
     docs_list = functions.load_docs_list()
-    doc_type = st.selectbox(
-        "Select the document from our database: ", list(docs_list.keys())
-    )
+    st.markdown("Select the document from our database: ")
+    doc_type = st.selectbox("", list(docs_list.keys()))
 
 
 # Initialize chat history
@@ -123,7 +122,7 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # Accept user input
-if prompt := st.chat_input("What is your question?"):
+if prompt := st.chat_input("How can I help?"):
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
 
