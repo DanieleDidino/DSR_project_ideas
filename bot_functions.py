@@ -8,7 +8,9 @@ import environ
 
 # from llama_index import StorageContext, load_index_from_disk
 import openai
+import streamlit as st
 from llama_index import SimpleDirectoryReader, VectorStoreIndex
+from streamlit_chat import message
 
 
 def save_uploaded_file(uploadedfile, folder_docs="docs"):
@@ -138,6 +140,26 @@ def load_docs_list():
     return docs_list
 
 
+# Parameters
+folder_docs = "docs"  # Folder where to save the uploaded files
+folder_vec_db = "vector_db"  # Folder where to save the vector database
+num_to_return = 3  # number of results to return (from the similarity search)
+
+
+def engine_from_upload(uploaded_files):
+    documents = save_read_write_all_uploaded_files(
+        uploaded_files, folder_docs=folder_docs
+    )
+
+    index = create_vector_database(
+        documents, folder_vec_db=folder_vec_db, file_name_vector_db="vect_bd_1.json"
+    )
+
+    query_engine = index.as_query_engine(similarity_top_k=num_to_return)
+
+    return query_engine
+
+
 ##############################################################################
 
 # TODO: load an existing vector database
@@ -153,51 +175,33 @@ if load_vec_db:
         )
 
 
-if __name__ == "__main__":
-    # Parameters
-    folder_docs = "docs"  # Folder where to save the uploaded files
-    folder_vec_db = "vector_db"  # Folder where to save the vector database
-    num_to_return = 3  # number of results to return (from the similarity search)
+# Uncomment this lines when we will ask for the user OpenAI Key
+# openai_key = col.text_input('OpenAI Key:')
+# os.environ["OPENAI_API_KEY"] = openai_key
 
-    # Uncomment this lines when we will ask for the user OpenAI Key
-    # openai_key = col.text_input('OpenAI Key:')
-    # os.environ["OPENAI_API_KEY"] = openai_key
-
-    # For now I use my key
-    env = environ.Env()
-    environ.Env.read_env()
-    API_KEY = env("OPENAI_API_KEY")
-    openai.api_key = API_KEY
+# For now I use my key
+env = environ.Env()
+environ.Env.read_env()
+API_KEY = env("OPENAI_API_KEY")
+openai.api_key = API_KEY
 
 
-def embed_docs(uploaded_files):
-    documents = save_read_write_all_uploaded_files(
-        uploaded_files, folder_docs=folder_docs
-    )
-    index = create_vector_database(
-        documents, folder_vec_db=folder_vec_db, file_name_vector_db="vect_bd_1.json"
-    )
-    query_engine = index.as_query_engine(similarity_top_k=num_to_return)
+# docs_list = load_docs_list()
 
-    docs_list = load_docs_list()
+# doc_type = st.selectbox("Please select the document: ", list(docs_list.keys()))
 
-    return docs_list
+# st.write("Document selected: ", doc_type)
 
+# user_query = st.text_input("You: ", "", key="input")
+# send_button = st.button("Send")
 
-doc_type = st.selectbox("Please select the document: ", list(docs_list.keys()))
+# # Initialize chat history
+# if "messages" not in st.session_state:
+#     st.session_state.messages = []
 
-st.write("Document selected: ", doc_type)
-
-user_query = st.text_input("You: ", "", key="input")
-send_button = st.button("Send")
-
-# Initialize chat history
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-if send_button:
-    send_message(user_query, st.session_state.messages, query_engine)
-    display_messages(st.session_state.messages)
+# if send_button:
+#     send_message(user_query, st.session_state.messages, query_engine)
+#     display_messages(st.session_state.messages)
 
 
 ################################################################################

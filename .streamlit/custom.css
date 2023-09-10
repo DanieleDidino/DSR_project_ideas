@@ -1,32 +1,42 @@
-span.css-10trblm.e1nzilvr1{
-    font-family: Georgia, serif; 
-    font-size: 28px; /* Replace with your desired font size */
-    color: #3b0b47; /* Replace with your desired text color */
+/* space in the file uploader*/
+label.css-t6eyue.e1y5xkzn3{margin-bottom: -1.8rem;}
 
+/*hide the 'Drag file' text in the file uploader */
+span.css-9ycgxx.e1b2p2ww12{display: none;}
+
+/*'Choose file from hard drive'*/
+div.css-b218v0 p{ font-size: 1.2rem; }
+
+/*Font size of File drop down list*/
+div.st-ae.st-af.st-ag.st-cq.st-ai.st-aj.st-ck.st-cr.st-b8{
+ font-size: 1.2rem;
 }
 
-
-div.css-183lzff.exotz4b0{
-    font-family: Merriweather, serif;
-    font-size: 18px; /* Replace with your desired font size */
-    color: #3b0b47; /* Replace with your desired text color */
-}
-
-
-div.css-z5fcl4 {
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
-
-
-style.custom-header {
+/*postition of Header and subheader*/
+div.block-container.css-ysnqb2.ea3mdgi4{
     position: absolute;
-    top: 10px; /* Adjust the value to control the distance from the top */
-    left: 10px; /* Adjust the value to control the distance from the left */
+    top: 0;
+    left: 0;
+    width: 90%;
+    padding-left: 30px;
+    padding-right: 0px;
 }
 
+/*title: Büro Gott*/
+div.css-1629p8f.e1nzilvr2.css-1629p8f h1{
+    font-family: Georgia;
+    font-size: 2rem;
+    font-weight: 600;
 
-/*
-    fontFamily: {
-    sans: ['Graphik', 'sans-serif'],
-    serif: ['Merriweather', 'serif'],}
+    padding: 25px 0px 10px 0px;
+    margin: 0px;
+    line-height: 0.5;
+}
+
+    /* subheader: your paper pusher*/
+    div.css-1629p8f.e1nzilvr2.css-1629p8f h3{
+    font-family: Georgia;
+    font-size: 1.3rem;
+    font-weight: 600;
+    padding: 0px 0px 100px 0px;
+}
