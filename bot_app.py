@@ -1,9 +1,13 @@
+import pdb
+
 # from datetime import datetime
 import time
 
 import bot_functions as functions
 import streamlit as st
 import streamlit_functions as sf
+from interface import *
+from llama_index import StorageContext, load_index_from_storage
 from PIL import Image
 from streamlit_chat import message
 from streamlit_extras.app_logo import add_logo
@@ -12,7 +16,7 @@ import numpy as np
 
 # streamlit config
 st.set_page_config(
-    page_title="Doc Hog",
+    page_title="Office Hog",
     # page_icon=
     layout="wide",
     page_icon=".streamlit/favicon.ico",
@@ -56,12 +60,13 @@ with open(".streamlit/custom.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
-# col1.subheader("Your robot paper pusher", divider="orange")
-
 # column 1
 with st.sidebar:
-    st.title("Doc Hog")
-    st.subheader("He eats all your papers")
+    st.title("Office Hog")
+    st.subheader("ate the official documents", divider="orange")
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
 
     with st.expander("Choose a file from your hard drive"):
         uploaded_file = st.file_uploader(
@@ -70,85 +75,54 @@ with st.sidebar:
             accept_multiple_files=True,
         )
 
-    show_progress = False  # Initialize the flag
 
-    # Check if any files are uploaded
-    if uploaded_file:
-        for file in uploaded_file:
-            if len(file.getvalue()) > 0:
-                show_progress = True
-                break
+# load index
+storage_context = StorageContext.from_defaults(persist_dir="vector_db")
+index = load_index_from_storage(storage_context)
+query_engine_to_use = index.as_query_engine(similarity_top_k=3)
 
-    # Show progress bar only if the flag is set to True
-    if show_progress:
-        # Show progress bar
-        progress_bar = st.progress(0)
-        progress_text = st.empty()
+# show_progress = False  # Initialize the flag
 
-        for perc_completed in range(100):
-            time.sleep(1)
-            progress_bar.progress(perc_completed + 1)
+# # Check if any files are uploaded
+# if uploaded_file:
+#     for file in uploaded_file:
+#         if len(file.getvalue()) > 0:
+#             show_progress = True
+#             break
 
-        # Save the file
-        functions.save_uploaded_file(uploaded_file)
+#     # Show progress bar only if the flag is set to True
+#     if show_progress:
+#         # Show progress bar
+#         progress_bar = st.progress(0)
+#         progress_text = st.empty()
 
-        # Update progress bar and text
-        progress_bar.progress(100)
-        st.text("File saved successfully!")
+#         for perc_completed in range(100):
+#             time.sleep(1)
+#             progress_bar.progress(perc_completed + 1)
 
-    query_engine = functions.engine_from_upload(uploaded_file)
+#         # Update progress bar and text
+#         progress_bar.progress(100)
 
-    st.sidebar.markdown("<br>", unsafe_allow_html=True)
+#         print(uploaded_file)
 
-    # show a selection of stored files
-    docs_list = functions.load_docs_list()
-    st.markdown("Select the document from our database: ")
-    doc_type = st.selectbox("", list(docs_list.keys()))
+#         # Save the file
+#         functions.save_uploaded_file(uploaded_file)
+
+#         st.text("File saved successfully!")
+
+#         # query engine from uploaded file
+#         query_engine_to_use = functions.engine_from_upload(uploaded_file)
+
+# else:
+#     # query engine from default vector space
+#     query_engine_to_use = functions.default_engine()
+
+# st.sidebar.markdown("<br>", unsafe_allow_html=True)
+
+# show a selection of stored files
+# docs_list = functions.load_docs_list()
+# st.markdown("Select the document from our database: ")
+# doc_type = st.selectbox("", list(docs_list.keys()))
+
 
 ## Chat
-
-# # avatar - little picture shown instead of the robot
-# avatar = np.array(Image.open(".streamlit/hengst.png"))
-
-# Initialize chat history
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-# Display chat messages from history on app rerun
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
-# Accept user input
-if prompt := st.chat_input("How can I help?"):
-    # Add user message to chat history
-    st.session_state.messages.append({"role": "user", "content": prompt})
-
-    # Display user message in chat message container
-    with st.chat_message("user"):
-        st.markdown(prompt)
-
-    # Display user message in chat message container
-    with st.chat_message("assistant"):
-        message_placeholder = st.empty()
-        full_response = ""
-
-        # Iterate through the messages and generate responses
-        for message in st.session_state.messages:
-            if message["role"] == "user":
-                response = functions.get_response(message["content"], query_engine)
-                full_response += response[0].delta.get("content", "")
-                message_placeholder.markdown(full_response + "▌")
-
-            # Display the response
-            message_placeholder.markdown(full_response)
-
-    # Append to session_state.messages
-    st.session_state.messages.append({"role": "assistant", "content": response})
-
-
-# st.info(
-#     "This app is maintained by the deities of paper work.\n"
-#     "You can learn more about us at [officegods.com](https://officegods.com).",
-#     icon="ℹ️",
-# )

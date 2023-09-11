@@ -113,5 +113,4 @@ with st.sidebar:
     doc_type = st.selectbox("", list(docs_list.keys()))
 
 
-## Chat
-# for different options look into chat.py file
+# Chat
