@@ -1,16 +1,16 @@
 /* space in the file uploader*/
-label.css-t6eyue.e1y5xkzn3{margin-bottom: -1.8rem;}
+label.css-14k6t0v{
+    visibility: hidden;
+    margin-bottom: -2rem;
+}
+
 
 /*hide the 'Drag file' text in the file uploader */
 span.css-9ycgxx.e1b2p2ww12{display: none;}
 
-/*'Choose file from hard drive'*/
-div.css-b218v0 p{ font-size: 1.2rem; }
-
 /*Font size of File drop down list*/
-div.st-ae.st-af.st-ag.st-cq.st-ai.st-aj.st-ck.st-cr.st-b8{
- font-size: 1.2rem;
-}
+div.css-xujc5b p{ font-size: 1.2rem; }
+div.css-uvn0xz p{ font-size: 1.2rem; }
 
 /*postition of Header and subheader*/
 div.block-container.css-ysnqb2.ea3mdgi4{
@@ -39,4 +39,12 @@ div.css-1629p8f.e1nzilvr2.css-1629p8f h1{
     font-size: 1.3rem;
     font-weight: 600;
     padding: 0px 0px 100px 0px;
+}
+
+/*move chat to the top*/
+div.stChatFloatingInputContainer{
+    position: absolute;
+    top: 0;
+    left: 0;
+
 }

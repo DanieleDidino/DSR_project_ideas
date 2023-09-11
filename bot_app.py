@@ -12,7 +12,7 @@ import numpy as np
 
 # streamlit config
 st.set_page_config(
-    page_title="Bürohengst",
+    page_title="Doc Hog",
     # page_icon=
     layout="wide",
     page_icon=".streamlit/favicon.ico",
@@ -29,9 +29,9 @@ st.set_page_config(
 # Hide the menu button
 st.markdown(
     """ <style>
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-</style> """,
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    </style> """,
     unsafe_allow_html=True,
 )
 
@@ -60,8 +60,8 @@ with open(".streamlit/custom.css") as f:
 
 # column 1
 with st.sidebar:
-    st.title("Büro Gott")
-    st.subheader("Your paper pusher bot")
+    st.title("Doc Hog")
+    st.subheader("He eats all your papers")
 
     with st.expander("Choose a file from your hard drive"):
         uploaded_file = st.file_uploader(
@@ -102,28 +102,25 @@ with st.sidebar:
 
     # show a selection of stored files
     docs_list = functions.load_docs_list()
-    doc_type = st.selectbox(
-        "Select the document from our database: ", list(docs_list.keys())
-    )
+    st.markdown("Select the document from our database: ")
+    doc_type = st.selectbox("", list(docs_list.keys()))
 
+## Chat
+
+# # avatar - little picture shown instead of the robot
+# avatar = np.array(Image.open(".streamlit/hengst.png"))
 
 # Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
 # Display chat messages from history on app rerun
-avatar = np.array(Image.open(".streamlit/hengst.png"))
-
-# Display chat messages from history on app rerun
 for message in st.session_state.messages:
-    with st.chat_message(
-        message["role"],
-        avatar=avatar,
-    ):
+    with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
 # Accept user input
-if prompt := st.chat_input("What is your question?"):
+if prompt := st.chat_input("How can I help?"):
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
 
@@ -131,39 +128,23 @@ if prompt := st.chat_input("What is your question?"):
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    # Use the custom query engine to get the response
-    response = query_engine(prompt)
-
-    # Display assistant response in chat message container
+    # Display user message in chat message container
     with st.chat_message("assistant"):
-        st.markdown(response)
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        message_placeholder = st.empty()
+        full_response = ""
 
-    # # Display assistant response in chat message container
-    # with st.chat_message("assistant"):
-    #     message_placeholder = st.empty()
-    #     full_response = ""
-    #     for response in openai.ChatCompletion.create(
-    #         model=st.session_state["openai_model"],
-    #         messages=[
-    #             {"role": m["role"], "content": m["content"]}
-    #             for m in st.session_state.messages
-    #         ],
-    #         stream=True,
-    #     ):
-    #         full_response += response.choices[0].delta.get("content", "")
-    #         message_placeholder.markdown(full_response + "▌")
-    #     message_placeholder.markdown(full_response)
-    #     st.session_state.messages.append(
-    #         {"role": "assistant", "content": full_response}
-    #     )
+        # Iterate through the messages and generate responses
+        for message in st.session_state.messages:
+            if message["role"] == "user":
+                response = functions.get_response(message["content"], query_engine)
+                full_response += response[0].delta.get("content", "")
+                message_placeholder.markdown(full_response + "▌")
 
-    # user_query = st.text_input("You: ", "", key="input")
-    # send_button = st.button("Send")
+            # Display the response
+            message_placeholder.markdown(full_response)
 
-    # if send_button:
-    #     functions.send_message(user_query, st.session_state.messages, query_engine)
-    #     functions.display_messages(st.session_state.messages)
+    # Append to session_state.messages
+    st.session_state.messages.append({"role": "assistant", "content": response})
 
 
 # st.info(
