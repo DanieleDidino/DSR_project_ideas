@@ -12,7 +12,7 @@ import numpy as np
 
 # streamlit config
 st.set_page_config(
-    page_title="Bürohengst",
+    page_title="Doc Hog",
     # page_icon=
     layout="wide",
     page_icon=".streamlit/favicon.ico",
@@ -137,25 +137,6 @@ if prompt := st.chat_input("How can I help?"):
     with st.chat_message("assistant"):
         st.markdown(response)
         st.session_state.messages.append({"role": "assistant", "content": response})
-
-    # # Display assistant response in chat message container
-    # with st.chat_message("assistant"):
-    #     message_placeholder = st.empty()
-    #     full_response = ""
-    #     for response in openai.ChatCompletion.create(
-    #         model=st.session_state["openai_model"],
-    #         messages=[
-    #             {"role": m["role"], "content": m["content"]}
-    #             for m in st.session_state.messages
-    #         ],
-    #         stream=True,
-    #     ):
-    #         full_response += response.choices[0].delta.get("content", "")
-    #         message_placeholder.markdown(full_response + "▌")
-    #     message_placeholder.markdown(full_response)
-    #     st.session_state.messages.append(
-    #         {"role": "assistant", "content": full_response}
-    #     )
 
     # user_query = st.text_input("You: ", "", key="input")
     # send_button = st.button("Send")
