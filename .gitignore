@@ -4,6 +4,7 @@ venv_DSR_project_ideas/
 .git/
 .env
 model/
+mod_finetuned/
 exp_finetune/
 results
 afa_docs/
