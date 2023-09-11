@@ -9,7 +9,7 @@ import environ
 # from llama_index import StorageContext, load_index_from_disk
 import openai
 import streamlit as st
-from llama_index import SimpleDirectoryReader, VectorStoreIndex
+from llama_index import SimpleDirectoryReader, StorageContext, load_index_from_storage
 from streamlit_chat import message
 
 
@@ -158,6 +158,19 @@ def engine_from_upload(uploaded_files):
     query_engine = index.as_query_engine(similarity_top_k=num_to_return)
 
     return query_engine
+
+
+def default_engine():
+    folder_with_index = "vector_db"
+
+    # rebuild storage context
+    storage_context = StorageContext.from_defaults(persist_dir=folder_with_index)
+
+    # load index
+    index = load_index_from_storage(storage_context)
+
+    def_engine = index.as_query_engine(similarity_top_k=5)
+    return def_engine
 
 
 ##############################################################################
