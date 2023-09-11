@@ -45,12 +45,12 @@ font-weight: 600;
 padding: 0px 0px 10px 0px;
 }
 
-/*move chat to the top*/
+/* move chat to the top
 div.stChatFloatingInputContainer{
     position: absolute;
     top:0;
     left: 0;
 
-}
+} */
 
 
