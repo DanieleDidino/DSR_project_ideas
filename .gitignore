@@ -10,3 +10,7 @@ afa_docs/
 all_pdfs/
 experiments
 
+agent.ipynb
+annotations.xml
+.streamlit/custom.css
+.gitignore
