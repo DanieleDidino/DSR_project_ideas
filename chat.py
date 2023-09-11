@@ -85,5 +85,47 @@ if prompt := st.chat_input("What is up?"):
         ):
             full_response += response.choices[0].delta.get("content", "")
             message_placeholder.markdown(full_response + "▌")
+
         message_placeholder.markdown(full_response)
     st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+
+### the following worked partly
+
+
+# Display chat messages from history on app rerun
+for message in st.session_state.messages:
+    with st.chat_message(
+        message["role"],
+        # avatar=avatar,
+    ):
+        st.markdown(message["content"])
+
+
+# Accept user input
+if prompt := st.chat_input("How can I help?"):
+    # Add user message to chat history
+    st.session_state.messages.append({"role": "user", "content": prompt})
+
+    # Display user message in chat message container
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
+    # Display user message in chat message container
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
+        full_response = ""
+
+    # Iterate through the messages and generate responses
+    for message in st.session_state.messages:
+        if message["role"] == "user":
+            # Generate response from your custom model
+            # Use the custom query engine to get the response
+            response = functions.get_response(message["content"], query_engine)
+            full_response += response
+
+            # Display the response
+            message_placeholder.markdown(full_response + "▌")
+
+            # Append to session_state.messages
+            st.session_state.messages.append({"role": "assistant", "content": response})

@@ -105,20 +105,18 @@ with st.sidebar:
     st.markdown("Select the document from our database: ")
     doc_type = st.selectbox("", list(docs_list.keys()))
 
+## Chat
+
+# # avatar - little picture shown instead of the robot
+# avatar = np.array(Image.open(".streamlit/hengst.png"))
 
 # Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
 # Display chat messages from history on app rerun
-avatar = np.array(Image.open(".streamlit/hengst.png"))
-
-# Display chat messages from history on app rerun
 for message in st.session_state.messages:
-    with st.chat_message(
-        message["role"],
-        avatar=avatar,
-    ):
+    with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
 # Accept user input
@@ -130,20 +128,23 @@ if prompt := st.chat_input("How can I help?"):
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    # Use the custom query engine to get the response
-    response = query_engine(prompt)
-
-    # Display assistant response in chat message container
+    # Display user message in chat message container
     with st.chat_message("assistant"):
-        st.markdown(response)
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        message_placeholder = st.empty()
+        full_response = ""
 
-    # user_query = st.text_input("You: ", "", key="input")
-    # send_button = st.button("Send")
+        # Iterate through the messages and generate responses
+        for message in st.session_state.messages:
+            if message["role"] == "user":
+                response = functions.get_response(message["content"], query_engine)
+                full_response += response[0].delta.get("content", "")
+                message_placeholder.markdown(full_response + "▌")
 
-    # if send_button:
-    #     functions.send_message(user_query, st.session_state.messages, query_engine)
-    #     functions.display_messages(st.session_state.messages)
+            # Display the response
+            message_placeholder.markdown(full_response)
+
+    # Append to session_state.messages
+    st.session_state.messages.append({"role": "assistant", "content": response})
 
 
 # st.info(
