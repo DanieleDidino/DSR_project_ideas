@@ -11,3 +11,10 @@ afa_docs/
 all_pdfs/
 experiments
 
+agent.ipynb
+annotations.xml
+chroma_db_oai/
+docs/
+search_tools/
+data_streamlit/
+__pyache__/

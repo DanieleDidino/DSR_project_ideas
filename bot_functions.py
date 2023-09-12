@@ -264,3 +264,17 @@ openai.api_key = API_KEY
 #         st.markdown(response)
 #     # Add assistant response to chat history
 #     st.session_state.messages.append({"role": "assistant", "content": response})
+
+
+# def save_uploaded_file(uploaded_file):
+#     if uploaded_file is not None:
+#         folder_name = "docs"
+
+#         if not os.path.exists(folder_name):
+#             os.makedirs(folder_name)
+
+#         file_path = os.path.join(folder_name, uploaded_file.name)
+
+#         with open(file_path, "wb") as f:
+#             f.write(uploaded_file.getbuffer())
+#     return st.success("Saved File:{} to directory".format(uploaded_file.name))

@@ -17,6 +17,15 @@ div.st-dg{font-size: 1.05rem;}
 /*chat text size*/
 textarea.st-ck{font-size: 1.2rem;}
 
+/*text next  to swith to user docs*/ 
+div.st-dk p{
+	font-size: 1.2rem;
+}
+
+div.css-1dp5vir{
+    background-image: linear-gradient(90deg, rgb(9, 152, 4), rgb(255, 198, 28));
+}
+
 /*postition of Header and subheader*/
 div.block-container.css-ysnqb2.ea3mdgi4{
     position: absolute;
