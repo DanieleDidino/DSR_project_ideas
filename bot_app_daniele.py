@@ -2,6 +2,7 @@
 import time
 
 # import bot_functions as functions
+from bot_utils import default_engine, engine_from_upload
 import streamlit as st
 # from interface import *
 from llama_index import StorageContext, load_index_from_storage
@@ -36,15 +37,16 @@ template = (
 qa_template = Prompt(template)
 
 
-
-
-folder_with_index = "vector_db"
-storage_context = StorageContext.from_defaults(persist_dir="vector_db") # rebuild storage context
-index = load_index_from_storage(storage_context) # load index
 number_top_results = 3 # Number of top results to return
-# query_engine = index.as_chat_engine(text_qa_template=qa_template, similarity_top_k=number_top_results)
-query_engine = index.as_query_engine(text_qa_template=qa_template, similarity_top_k=number_top_results)
+folder_with_index = "vector_db"
 
+# folder_with_index = "vector_db"
+# storage_context = StorageContext.from_defaults(persist_dir="vector_db") # rebuild storage context
+# index = load_index_from_storage(storage_context) # load index
+# number_top_results = 3 # Number of top results to return
+# # query_engine = index.as_chat_engine(text_qa_template=qa_template, similarity_top_k=number_top_results)
+# query_engine = index.as_query_engine(text_qa_template=qa_template, similarity_top_k=number_top_results)
+query_engine = default_engine(folder_with_index, qa_template, number_top_results)
 
 # streamlit config
 st.set_page_config(
