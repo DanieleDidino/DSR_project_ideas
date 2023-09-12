@@ -2,7 +2,7 @@
 import time
 
 # import bot_functions as functions
-from bot_utils import default_engine, engine_from_upload
+from bot_utils import default_engine, engine_from_upload, save_uploadedfile
 import streamlit as st
 # from interface import *
 from llama_index import StorageContext, load_index_from_storage
@@ -12,7 +12,7 @@ from streamlit_chat import message
 # from streamlit_extras.app_logo import add_logo
 import environ
 import openai
-
+import os
 
 
 # Uncomment this lines when we will ask for the user OpenAI Key
@@ -24,6 +24,12 @@ env = environ.Env()
 environ.Env.read_env()
 API_KEY = env("OPENAI_API_KEY")
 openai.api_key = API_KEY
+
+
+
+folder_user_uploaded_files = "data_streamlit"
+
+
 
 
 # Define prompt
@@ -46,7 +52,7 @@ folder_with_index = "vector_db"
 # number_top_results = 3 # Number of top results to return
 # # query_engine = index.as_chat_engine(text_qa_template=qa_template, similarity_top_k=number_top_results)
 # query_engine = index.as_query_engine(text_qa_template=qa_template, similarity_top_k=number_top_results)
-query_engine = default_engine(folder_with_index, qa_template, number_top_results)
+query_engine_default = default_engine(folder_with_index, qa_template, number_top_results)
 
 # streamlit config
 st.set_page_config(
@@ -97,6 +103,7 @@ with open(".streamlit/custom.css") as f:
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown("<br>", unsafe_allow_html=True)
+        use_user_docs = st.toggle('User document(s)', key="my_toggle")
     
         with st.expander("Choose a file from your hard drive"):
             uploaded_file = st.file_uploader(
@@ -104,11 +111,13 @@ with open(".streamlit/custom.css") as f:
                 type=["docx", "doc", "pdf"],
                 accept_multiple_files=True,
             )
+            # uploaded_file = st.file_uploader("", type=['pdf'])
     
             show_progress = False  # Initialize the flag
     
             # Check if any files were uploaded
             if uploaded_file:
+                # show_progress = True
                 for file in uploaded_file:
                     if len(file.getvalue()) > 0:
                         show_progress = True
@@ -121,13 +130,11 @@ with open(".streamlit/custom.css") as f:
                 progress_text = st.empty()
     
                 for perc_completed in range(100):
-                    time.sleep(1)
+                    #time.sleep(1)
                     progress_bar.progress(perc_completed + 1)
     
                 # Update progress bar and text
                 progress_bar.progress(100)
-    
-                print(uploaded_file)
     
                 ## Save the file - didn't work
                 # functions.save_uploaded_file(uploaded_file)
@@ -136,23 +143,45 @@ with open(".streamlit/custom.css") as f:
     
                 ## query engine from uploaded file - not working
                 # query_engine_to_use = functions.engine_from_upload(uploaded_file)
-    
-            else:
-                ## query engine from default vector space - also not working
-                #EDIT# query_engine_to_use = functions.default_engine()
-                pass
+                # save_uploadedfile(uploaded_file)
+                ## for file in uploaded_file:
+                ##     save_uploadedfile(file, folder_user_uploaded_files)
+                ## query_engine_user = engine_from_upload(folder_user_uploaded_files, qa_template, number_top_results)
+                # query_engine = query_engine_user
     
         st.markdown("<br>", unsafe_allow_html=True)
     
         # show a selection of stored files
-        #EDIT# docs_list = functions.load_docs_list()
         st.markdown("Select the document from our database: ")
-        #EDIT# doc_type = st.selectbox("", list(docs_list.keys()))
 
+
+
+if uploaded_file:
+    # save_uploadedfile(file, folder_user_uploaded_files)
+    for file in uploaded_file:
+        save_uploadedfile(file, folder_user_uploaded_files)
 
 
 ## Chat
 # for different options look into chat.py file
+
+if use_user_docs:
+    if uploaded_file:
+        query_engine_user = engine_from_upload(folder_user_uploaded_files, qa_template, number_top_results)
+        query_engine = query_engine_user
+    elif not uploaded_file:
+        query_engine = query_engine_default
+        st.write("NO UPLOADED FILE")
+else:
+    query_engine = query_engine_default
+
+# if uploaded_file:
+#     save_uploadedfile(file, folder_user_uploaded_files)
+#     query_engine_user = engine_from_upload(folder_user_uploaded_files, qa_template, number_top_results)
+#     query_engine = query_engine_user
+# else:
+#     query_engine = query_engine_default
+
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -182,8 +211,6 @@ if prompt := st.chat_input("What is up?"):
     #         "page": response.metadata[meta_data]["page_label"],
     #         "document":response.metadata[meta_data]["file_name"]
     #     }
-    
-    #OLD# response = f"Echo: {prompt}"
     
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
