@@ -11,7 +11,8 @@ all_pdfs/
 experiments
 
 web_retriever.py
-search_tools/context.xml
+search_tools/
 chroma_db_oai/
 docs/
-streamlit_upload/keyboard-shortcuts-windows.pdf
+streamlit_upload/
+__pycache__/
