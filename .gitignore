@@ -1,4 +1,3 @@
-.gitignore
 venv_proj_ideas/
 venv_DSR_project_ideas/
 .git/
@@ -11,3 +10,8 @@ afa_docs/
 all_pdfs/
 experiments
 
+web_retriever.py
+search_tools/context.xml
+chroma_db_oai/
+docs/
+streamlit_upload/keyboard-shortcuts-windows.pdf

@@ -8,7 +8,7 @@ import openai
 import streamlit as st
 
 # import bot_functions as functions
-from bot_utils import default_engine, engine_from_upload, save_uploadedfile
+from bot_utils_marco import default_engine, engine_from_upload, save_uploadedfiles2
 
 # from interface import *
 from llama_index import Prompt, StorageContext, load_index_from_storage
@@ -112,7 +112,6 @@ with open(".streamlit/custom.css") as f:
                 type=["docx", "doc", "pdf"],
                 accept_multiple_files=True,
             )
-            # uploaded_file = st.file_uploader("", type=['pdf'])
 
             show_progress = False  # Initialize the flag
 
@@ -137,29 +136,15 @@ with open(".streamlit/custom.css") as f:
                 # Update progress bar and text
                 progress_bar.progress(100)
 
-                ## Save the file - didn't work
-                # functions.save_uploaded_file(uploaded_file)
+                ## Save the file
+                save_uploadedfiles2(uploaded_file)
 
                 st.text("File saved successfully!")
-
-                ## query engine from uploaded file - not working
-                # query_engine_to_use = functions.engine_from_upload(uploaded_file)
-                # save_uploadedfile(uploaded_file)
-                ## for file in uploaded_file:
-                ##     save_uploadedfile(file, folder_user_uploaded_files)
-                ## query_engine_user = engine_from_upload(folder_user_uploaded_files, qa_template, number_top_results)
-                # query_engine = query_engine_user
 
         st.markdown("<br>", unsafe_allow_html=True)
 
         # show a selection of stored files
         st.markdown("Select the document from our database: ")
-
-
-if uploaded_file:
-    # save_uploadedfile(file, folder_user_uploaded_files)
-    for file in uploaded_file:
-        save_uploadedfile(file, folder_user_uploaded_files)
 
 
 ## Chat
