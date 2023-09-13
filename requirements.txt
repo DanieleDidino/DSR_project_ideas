@@ -10,6 +10,7 @@ numpy==1.25.1
 openai==0.28.0
 pandas==2.0.3
 pdfkit==1.0.0
+pinecone-client==2.2.2
 plotly==5.16.1
 pypdf==3.15.5
 python-environ==0.4.54
@@ -19,6 +20,7 @@ seaborn==0.12.2
 sentence-transformers==2.2.2
 streamlit==1.26.0
 streamlit-chat==0.1.1
+streamlit-extras==0.3.2
 tiktoken==0.4.0
 torch==2.0.1
 wandb==0.15.8
