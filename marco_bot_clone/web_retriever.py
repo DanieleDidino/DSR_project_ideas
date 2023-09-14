@@ -22,7 +22,7 @@ class DocumentRetrievalSystem:
         self.llm = ChatOpenAI(temperature=0)
 
         # Initialize Custom Search with Google Programmable Search Engine
-        self.search = GoogleSearchAPIWrapper()
+        self.search = GoogleSearchAPIWrapper(google_api_key="GOOGLE_API_KEY", google_cse_id="GOOGLE_CSE_ID" )
 
         # Initialize Web Research Retriever
         self.web_research_retriever = WebResearchRetriever.from_llm(
