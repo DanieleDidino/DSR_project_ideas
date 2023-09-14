@@ -2,7 +2,6 @@ import os
 
 import streamlit as st
 from dotenv import load_dotenv
-from langchain.callbacks import StreamlitCallbackHandler
 from web_retriever import DocumentRetrievalSystem
 
 with st.sidebar:
@@ -30,14 +29,6 @@ if prompt := st.chat_input(placeholder="Who won the Women's U.S. Open in 2018?")
     st.chat_message("user").write(prompt)
 
     doc_retriever = DocumentRetrievalSystem()
-
-    # with st.chat_message("assistant"):
-    #     # st_cb = StreamlitCallbackHandler(st.container(), expand_new_thoughts=False)
-    #     # response = search_agent.run(st.session_state.messages, callbacks=[st_cb])
-    #     answer, sources = doc_retriever.get_answer(st.session_state.messages)
-    #     st.session_state.messages.append({"role": "assistant", "content": answer})
-    #     st.markdown(answer, sources, unsafe_allow_html=True)
-    #     st.markdown(sources, unsafe_allow_html=True)
 
     with st.chat_message("assistant"):
         answer, sources = doc_retriever.get_answer(st.session_state.messages)
