@@ -10,7 +10,6 @@ afa_docs/
 all_pdfs/
 experiments
 
-web_retriever.py
 search_tools/context.xml
 chroma_db_oai/
 docs/
