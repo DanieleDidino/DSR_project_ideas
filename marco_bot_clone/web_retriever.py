@@ -1,6 +1,8 @@
 import logging
+import os
 
 import nest_asyncio
+from dotenv import load_dotenv
 from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.chat_models.openai import ChatOpenAI
 from langchain.embeddings import OpenAIEmbeddings
@@ -8,7 +10,11 @@ from langchain.retrievers.web_research import WebResearchRetriever
 from langchain.utilities import GoogleSearchAPIWrapper
 from langchain.vectorstores import Chroma
 
+load_dotenv()
 nest_asyncio.apply()
+
+# GOOGLE_CSE_ID = os.getenv("GOOGLE_CSE_ID")
+# GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # Vectorstore
 vectorstore = Chroma(
@@ -21,8 +27,11 @@ class DocumentRetrievalSystem:
         # Initialize LLM
         self.llm = ChatOpenAI(temperature=0)
 
+
         # Initialize Custom Search with Google Programmable Search Engine
-        self.search = GoogleSearchAPIWrapper(google_api_key="GOOGLE_API_KEY", google_cse_id="GOOGLE_CSE_ID" )
+        # self.search = GoogleSearchAPIWrapper(google_api_key=GOOGLE_API_KEY, google_cse_id=GOOGLE_CSE_ID)
+        self.search = GoogleSearchAPIWrapper()
+
 
         # Initialize Web Research Retriever
         self.web_research_retriever = WebResearchRetriever.from_llm(
