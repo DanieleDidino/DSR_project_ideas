@@ -51,7 +51,9 @@ class DocumentRetrievalSystem:
         sources = set()
         for d in docs:
             sources.add(d.metadata['source'])
-        
+
         return result['answer'], sources
+    
+
 
 
