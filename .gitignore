@@ -10,9 +10,11 @@ afa_docs/
 all_pdfs/
 experiments
 
-web_retriever.py
 search_tools/
 chroma_db_oai/
 docs/
 streamlit_upload/
 __pycache__/
+marco_bot_clone/documents_pdf/
+marco_bot_clone/pdf_titles copy
+marco_bot_clone/data_streamlit
