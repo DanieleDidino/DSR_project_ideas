@@ -2,8 +2,15 @@ import os
 
 import streamlit as st
 from langchain.chat_models import ChatOpenAI
-from llama_index import ( LLMPredictor, Prompt, ServiceContext, SimpleDirectoryReader, 
-                         StorageContext, VectorStoreIndex, load_index_from_storage, )
+from llama_index import (
+    LLMPredictor,
+    Prompt,
+    ServiceContext,
+    SimpleDirectoryReader,
+    StorageContext,
+    VectorStoreIndex,
+    load_index_from_storage,
+)
 
 
 def default_engine(folder_with_index, qa_template, number_top_results):
