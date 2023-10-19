@@ -5,9 +5,7 @@ venv_DSR_project_ideas/
 model/
 mod_finetuned/
 exp_finetune/
-results
 afa_docs/
-all_pdfs/
 experiments
 
 search_tools/
