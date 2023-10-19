@@ -1,12 +1,6 @@
 venv_proj_ideas/
 venv_DSR_project_ideas/
 .git/
-.env
-model/
-mod_finetuned/
-exp_finetune/
-afa_docs/
-experiments
 
 search_tools/
 chroma_db_oai/
