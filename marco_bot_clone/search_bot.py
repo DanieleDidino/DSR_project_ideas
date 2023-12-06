@@ -1,74 +1,59 @@
-import logging
 import os
 
-import nest_asyncio
 import streamlit as st
-from bot_utils_marco import default_engine
 from dotenv import load_dotenv
-from langchain.agents import AgentType, initialize_agent, load_tools
-from langchain.chains import RetrievalQAWithSourcesChain
-from langchain.chat_models.openai import ChatOpenAI
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.llms import OpenAI
-from langchain.retrievers.web_research import WebResearchRetriever
-from langchain.tools import Tool
-from langchain.utilities import GoogleSearchAPIWrapper, GoogleSerperAPIWrapper
-from langchain.vectorstores import Chroma
-from llama_index import Prompt
-from llama_index.langchain_helpers.agents import IndexToolConfig, LlamaIndexTool
-from web_retriever import AAgent, WWebretriever
+from web_retriever import ToolChainAgent
 
-GOOGLE_CSE_ID = os.getenv("GOOGLE_CSE_ID")
+load_dotenv()
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+GOOGLE_CSE_ID = os.getenv("GOOGLE_CSE_ID")
+SERPAPI_KEY = os.getenv("SERPAPI_KEY")
+SERPER_API_KEY = os.getenv('SERPER_API_KEY')
+# openai.api_key = os.getenv('OPENAI_API_KEY')
 
-# Vectorstore
-vectorstore = Chroma(
-    embedding_function=OpenAIEmbeddings(),
-    persist_directory="./chroma_db_oai",
-)
-
+# Initialize Agent with tool belt
+agent = ToolChainAgent()
 
 with st.sidebar:
     openai_api_key = st.text_input(
         "OpenAI API Key", key="langchain_search_api_key_openai", type="password"
     )
 
-load_dotenv()
-openai_api_key= GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
-
+# Initialize chat history
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [
-        {
-            "role": "assistant",
-            "content": "Hi, I'm a chatbot who can search the web. How can I help you?",
-        }
-    ]
+    st.session_state.messages = []
 
-for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
+# Display chat messages from history on app rerun
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+    
 
-if prompt := st.chat_input(placeholder="Who won the Women's U.S. Open in 2018?"):
+# React to user input
+if prompt := st.chat_input("What is up?"):
+    # Display user message in chat message container
+    st.chat_message("user").markdown(prompt)
+    # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
-    st.chat_message("user").write(prompt)
 
-    web_retriever = WWebretriever(vectorstore)
-    agent = AAgent(web_retriever)
-    # doc_retriever = DocumentRetrievalSystem()
-
+    # Response from llm
+    response = agent.run(prompt)['output']
+    
+    # response_metadata = dict()
+    # for i, meta_data in enumerate(response.metadata):
+    #     key_name = "ref_" + str(i)
+    #     response_metadata[key_name] = {
+    #         "page": response.metadata[meta_data]["page_label"],
+    #         "document":response.metadata[meta_data]["file_name"]
+    #     }
+    
+    # Display assistant response in chat message container
     with st.chat_message("assistant"):
-        answer = agent.run(st.session_state.messages)
-        # answer, sources = doc_retriever.get_answer(st.session_state.messages)
-        st.session_state.messages.append({"role": "assistant", "content": answer})
-        
-        # Display answer
-        st.markdown(answer, unsafe_allow_html=True)
-        
-        #  # Display sources as clickable buttons
-        # for source in sources:
-        #     button_label = f"Visit {source}"
-        #     if st.button(button_label):
-        #         st.markdown(f"[{source}]({source})", unsafe_allow_html=True)
+        st.markdown(response)
+    # Add assistant response to chat history
+    st.session_state.messages.append({"role": "assistant", "content": response})
 
 
 
